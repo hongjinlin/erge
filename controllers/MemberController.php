@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use app\models\Setting;
 use app\models\Member;
 use PHPExcel;
 use yii\data\Pagination;
@@ -29,14 +30,22 @@ class MemberController extends Controller
     }
 
     public function actionIndex(){
-        $today = strtotime(date('m/d', time()));
-        echo $today;
+        $request = Yii::$app->request;
+        $time = $request->post('birthday');
+        $time = $time ? strtotime($time) : time();
+        $today = strtotime(date('m/d', $time));
         $memberData = Member::find()->where(['birthday' => $today]);
         $pages = new Pagination(['totalCount' => $memberData->count(), 'pageSize' => '2']);
         $members = $memberData->offset($pages->offset)->limit($pages->limit)->all();
         $data['members'] = $members;
         $data['pages'] = $pages;
+        $data['today'] = $today;
         return $this->render('index', $data);
+    }
+
+    public function actionSend(){
+        $request = Yii::$app->request;
+        var_dump($request->post());
     }
 
     public function actionTest(){
