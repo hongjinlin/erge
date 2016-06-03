@@ -20,8 +20,8 @@
     </tr>
     <?php foreach($members as $key => $member): ?>
       <tr>
-        <input type="hidden" name="member_<?php echo $key; ?>_id" value="<?php echo $member['id']; ?>">
         <input type="hidden" name="member_<?php echo $key; ?>_phone" value="<?php echo $member['phone']; ?>">
+        <input type="hidden" name="member_<?php echo $key; ?>_name" value="<?php echo $member['name']; ?>">
       	<th><?php echo $member['id']; ?></th>
       	<th><?php echo $member['name']; ?></th>
       	<th><?php echo $member['phone']; ?></th>
