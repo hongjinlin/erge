@@ -60,6 +60,7 @@
                   <ul class="nav navbar-nav">
                     <li class="active"><a href="/index.php?r=index/index">欢迎您：<?php echo \Yii::$app->user->identity->username; ?><span class="sr-only">(current)</span></a></li>
                     <li><a href="/index.php?r=member/index">会员</a></li>                    
+                    <li><a href="/index.php?r=index/config">配置</a></li>                    
                   </ul>
                   
                   <ul class="nav navbar-nav navbar-right">

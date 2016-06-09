@@ -1,9 +1,29 @@
 <?php use yii\widgets\LinkPager; ?>
+<?php 
+use yii\bootstrap\Alert;
+if( Yii::$app->getSession()->hasFlash('error') ) {
+  echo Alert::widget([
+    'options' => [
+    'class' => 'alert-error',
+    ],
+    'body' => Yii::$app->getSession()->getFlash('error'),
+    ]);
+}
+if( Yii::$app->getSession()->hasFlash('success') ) {
+  echo Alert::widget([
+    'options' => [
+    'class' => 'alert-success', //这里是提示框的class
+    ],
+    'body' => Yii::$app->getSession()->getFlash('success'), //消息体
+]);
+}
+?>
+<div><a class="btn btn-default" href="/index.php?r=member/post" role="button">添加会员</a></div>
 <form class="form-inline col-md-6 col-md-offset-6" method="post" action="/index.php?r=member/index">
   <div class="form-group">
     <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
     <label for="birthday">(默认显示今天生日会员)</label>
-    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<?php if($today){echo date('Y-m-d', $today);}else{echo date('Y-m-d', time());} ?>">
+    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<?php if(isset($today)){echo date('Y-m-d', $today);}else{echo date('Y-m-d', time());} ?>">
   </div>
   <button type="submit" class="btn btn-default">确定</button>
 </form>

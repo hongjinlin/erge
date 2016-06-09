@@ -40,7 +40,7 @@ class MemberController extends Controller
         if($time){
             $_SESSION['time'] = $time;
         }
-        $time = $_SESSION['time'] ? strtotime($_SESSION['time']) : time();
+        $time = isset($_SESSION['time']) ? strtotime($_SESSION['time']) : time();
         $today = strtotime(date('m/d', $time));
         $memberData = Member::find()->where(['birthday' => $today]);
         $pageSize = Setting::find()->where(['name' => 'pagesize'])->one();
@@ -102,6 +102,28 @@ class MemberController extends Controller
     public function actionTest2(){
         $members = Member::find()->all();
         echo date('m/d',$members[0]['birthday']);   
+    }
+
+    public function actionPost(){
+        $data = array();
+
+        return $this->render('post', $data);
+    }
+
+    public function actionSave(){
+        if(!$_POST['id']){
+            \Yii::$app->getSession()->setFlash('error', '会员卡号不能为空！');
+            return $this->render('post');
+        }
+        $mMember = new Member();
+        $mMember->id = intval($_POST['id']);
+        $mMember->name = $_POST['name'];
+        $mMember->phone = $_POST['phone'];
+        $mMember->birthday = strtotime(date('m/d',strtotime($_POST['birthday'])));
+        $mMember->save();
+        \Yii::$app->getSession()->setFlash('success', '添加成功！');
+        return $this->redirect(['member/index']);
+
     }
 
 }
