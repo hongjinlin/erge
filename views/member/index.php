@@ -18,7 +18,10 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
 ]);
 }
 ?>
-<div><a class="btn btn-default" href="/index.php?r=member/post" role="button">添加会员</a></div>
+<div>
+    <a class="btn btn-default" href="/index.php?r=member/post" role="button">添加会员</a>
+    <a class="btn btn-default" href="/index.php?r=member/excel" role="button">导入名单</a>
+</div>
 <form class="form-inline col-md-6 col-md-offset-6" method="post" action="/index.php?r=member/index">
   <div class="form-group">
     <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
@@ -37,19 +40,24 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
     	<th>生日</th>
     	<th>是否发信息</th>
     	<th class=' col-md-4'>信息内容</th>
+      <th>操作</th>
     </tr>
     <?php foreach($members as $key => $member): ?>
       <tr>
         <input type="hidden" name="member_<?php echo $key; ?>_phone" value="<?php echo $member['phone']; ?>">
         <input type="hidden" name="member_<?php echo $key; ?>_name" value="<?php echo $member['name']; ?>">
-      	<th><?php echo $member['id']; ?></th>
-      	<th><?php echo $member['name']; ?></th>
-      	<th><?php echo $member['phone']; ?></th>
-      	<th><?php echo date('m月d日', $member['birthday']); ?></th>
-      	<th>
-    		<input type="checkbox" name="isSelect<?php echo $key; ?>" value="1">
-    	</th>
-      	<th class=' col-md-3'><textarea name="member_<?php echo $key; ?>_msg" class="form-control" rows="1"></textarea></th>
+      	<td><?php echo $member['id']; ?></td>
+      	<td><?php echo $member['name']; ?></td>
+      	<td><?php echo $member['phone']; ?></td>
+      	<td><?php echo date('m月d日', $member['birthday']); ?></td>
+      	<td>
+      		<input type="checkbox" name="isSelect<?php echo $key; ?>" value="1">
+      	</td>
+      	<td class=' col-md-3'><textarea name="member_<?php echo $key; ?>_msg" class="form-control" rows="1"></textarea></td>
+        <td align="center">
+          <a href="/index.php?r=member/post&id=<?php echo $member['id']; ?>">修改</a> |
+          <a href="/index.php?r=member/delete&id=<?php echo $member['id']; ?>" onclick="if(confirm('确认删除吗？')){return true;}else{return false;}">删除</a>
+        </td>
       </tr>
     <?php endforeach; ?>
   </table>  

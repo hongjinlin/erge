@@ -25,8 +25,9 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
     <div class="panel-body">
     <form method="post" action="/index.php?r=member/save">
     
-    <input type="hidden" name="id" value="" />
+    <input type="hidden" name="act" value="<?php if(isset($member)) echo 'update'; ?>" />
     <input type="hidden" name="_csrf" value="<?php echo yii::$app->request->csrfToken; ?>" />
+
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-6 form-horizontal">
@@ -34,7 +35,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
             <label for="id" class="control-label">卡号</label>
           </div>
           <div class="form-group">
-            <input type="text" name="id" class="col-md-6 form-control" placeholder="会员卡号必须唯一" value="" aria-describedby="sizing-addon1">
+            <input type="text" name="id" class="col-md-6 form-control" placeholder="会员卡号必须唯一" value="<?php if(isset($member)) echo $member['id']; ?>" aria-describedby="sizing-addon1">
           </div>
         </div>
       </div>
@@ -46,7 +47,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
             <label for="name" class="control-label">姓名</label>
           </div>
           <div class="form-group">
-            <input type="text" name="name" class="col-md-6 form-control" placeholder="雷炎芳" value="" aria-describedby="sizing-addon1">
+            <input type="text" name="name" class="col-md-6 form-control" placeholder="雷炎芳" value="<?php if(isset($member)) echo $member['name']; ?>" aria-describedby="sizing-addon1">
           </div>
         </div>
       </div>
@@ -58,7 +59,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
             <label for="phone" class="control-label">电话</label>
           </div>
           <div class="form-group">
-            <input type="text" name="phone" id="phone" class="col-md-6 form-control" placeholder="18150107060" value="" aria-describedby="sizing-addon1">
+            <input type="text" name="phone" id="phone" class="col-md-6 form-control" placeholder="18150107060" value="<?php if(isset($member)) echo $member['phone']; ?>" aria-describedby="sizing-addon1">
           </div>
         </div>
       </div>
@@ -70,7 +71,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
             <label for="birthday" class="control-label">生日</label>
           </div>
           <div class="form-group">
-            <input type="text" name="birthday" id="birthday" class="col-md-6 form-control" placeholder="" value="" aria-describedby="sizing-addon1">
+            <input type="text" name="birthday" id="birthday" class="col-md-6 form-control" placeholder="" value="<?php if(isset($member)) echo date('Y-m-d', $member['birthday']); ?>" aria-describedby="sizing-addon1">
           </div>
         </div>
       </div>
@@ -79,7 +80,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
       <div class="row">
         <div class="form-group">
           <label for="des" class="col-md-4 control-label"></label>
-          <input type="submit" name="submit" class="btn btn-default navbar-btn" value="添加" />
+          <input type="submit" name="submit" class="btn btn-default navbar-btn" value="<?php if(isset($member))echo '修改';else echo '添加'; ?>" />
         </div>
       </div>
     </form>
@@ -88,8 +89,6 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#birthday').datetimepicker({
-          disabledHours: true
-        });
+        $('#birthday').datetimepicker();
     });
 </script>
